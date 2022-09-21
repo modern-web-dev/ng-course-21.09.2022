@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Book} from '../../model/book';
 
 @Component({
@@ -7,20 +7,24 @@ import {Book} from '../../model/book';
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent {
-  readonly book: Book = {
-    author: 'Douglas Crockford',
-    title: 'JavaScript.The Good Parts'
-  };
+  @Input('value')
+  book: Book | undefined | null;
 
-  save(event: Event) {
+  @Output()
+  bookChange = new EventEmitter<Book>();
+
+  notifyOnBookChange(event: Event) {
     event.preventDefault();
     const bookForm = event.target as HTMLFormElement;
     const authorInput = bookForm.querySelector<HTMLInputElement>('#author');
     const titleInput = bookForm.querySelector<HTMLInputElement>('#title');
-    const updatedBook: Book = {
-      author: authorInput?.value ?? '',
-      title: titleInput?.value ?? ''
-    };
-    console.log(updatedBook);
+    if (this.book) {
+      const updatedBook: Book = {
+        id: this.book.id,
+        author: authorInput?.value ?? '',
+        title: titleInput?.value ?? ''
+      };
+      this.bookChange.emit(updatedBook);
+    }
   }
 }

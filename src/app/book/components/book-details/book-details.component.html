@@ -1,11 +1,11 @@
-<form (submit)="save($event)">
+<form (submit)="notifyOnBookChange($event)">
   <div class="mb-3">
     <label class="form-label" for="author">Author:</label>
-    <input class="form-control" id="author" [value]="book.author">
+    <input class="form-control" id="author" [value]="book?.author">
   </div>
   <div class="mb-3">
     <label class="form-label" for="title">Title:</label>
-    <input class="form-control" id="title" [value]="book.title">
+    <input class="form-control" id="title" [value]="book?.title">
   </div>
   <button class="btn btn-primary" type="submit">Save</button>
 </form>
