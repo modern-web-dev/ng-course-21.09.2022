@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {Book} from '../../model/book';
 
 @Component({
   selector: 'ba-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.scss']
+  styleUrls: ['./book-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookDetailsComponent {
   @Input('value')
