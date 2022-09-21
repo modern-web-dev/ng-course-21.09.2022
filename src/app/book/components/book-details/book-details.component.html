@@ -1,1 +1,8 @@
-<p>book-details works!</p>
+<form (submit)="save($event)">
+  <label for="author">Author:</label>
+  <input id="author" [value]="book.author">
+  <label for="title">Title:</label>
+  <input id="title" [value]="book.title">
+  <button type="submit">Save</button>
+  <button type="submit">Do Something</button>
+</form>
