@@ -1,11 +1,21 @@
-<form (submit)="notifyOnBookChange($event)">
+<form (submit)="updateBook($event)">
   <div class="mb-3">
     <label class="form-label" for="author">Author:</label>
-    <input class="form-control" id="author" [value]="book?.author">
+    <input
+      class="form-control"
+      id="author"
+      [value]="book?.author"
+      (input)="markAsDirty()"
+    />
   </div>
   <div class="mb-3">
     <label class="form-label" for="title">Title:</label>
-    <input class="form-control" id="title" [value]="book?.title">
+    <input
+      class="form-control"
+      id="title"
+      [value]="book?.title"
+      (input)="markAsDirty()"
+    />
   </div>
   <button class="btn btn-primary" type="submit">Save</button>
 </form>

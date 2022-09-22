@@ -17,21 +17,18 @@ import {
   Subject,
   takeUntil,
   merge,
+  debounceTime,
 } from 'rxjs';
 
 @Component({
   selector: 'ba-book-overview',
   templateUrl: './book-overview.component.html',
   styleUrls: ['./book-overview.component.scss'],
-  providers:[
-    BookService
-  ],
 })
 export class BookOverviewComponent implements AfterViewInit, OnDestroy {
   @ViewChild('typeahead')
   typeahead?: ElementRef<HTMLInputElement>;
 
-  selectedBook: Book | null = null;
   books$: Observable<Book[]> | undefined;
   booksLength$: Observable<number> | undefined;
   private readonly unsubscribe$: Subject<true> = new Subject<true>();
@@ -50,6 +47,7 @@ export class BookOverviewComponent implements AfterViewInit, OnDestroy {
     ).pipe(
       mapEventToInputValue(),
       distinctUntilChanged(),
+      debounceTime(500),
       switchMap((query) => this.bookService.findBooks(query)),
       takeUntil(this.unsubscribe$)
     );
@@ -58,21 +56,6 @@ export class BookOverviewComponent implements AfterViewInit, OnDestroy {
     setTimeout(()=> {
       this.booksLength$ = this.books$?.pipe(map((books) => books.length));
     },0);
-  }
-
-  selectBookOf(book: Book) {
-    this.selectedBook = book;
-  }
-
-  isBookSelected(book: Book) {
-    return this.selectedBook === book;
-  }
-
-  updateBook(updatedBook: Book) {
-    this.bookService
-      .updateBook(updatedBook)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((updatedBook) => (this.selectedBook = updatedBook));
   }
 
   ngOnDestroy(): void {
