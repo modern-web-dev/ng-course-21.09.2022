@@ -45,11 +45,10 @@ export class BookDetailsComponent implements OnInit {
     const titleInput = bookForm.querySelector<HTMLInputElement>('#title');
     if (this.book) {
       const updatedBook: Book = {
-        id: this.book.id,
         author: authorInput?.value ?? '',
         title: titleInput?.value ?? '',
       };
-      this.bookService.updateBook(updatedBook).subscribe(() => {
+      this.bookService.updateBook(this.book.id!, updatedBook).subscribe(() => {
         this.dirty = false;
         this.router.navigate(['..']);
       });

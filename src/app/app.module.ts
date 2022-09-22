@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
@@ -10,6 +11,7 @@ import { NotFoundComponent } from './book/components/not-found/not-found.compone
 
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       [
         { path: '', redirectTo: '/books', pathMatch: 'full' },
