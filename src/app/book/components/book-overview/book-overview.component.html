@@ -1,21 +1,26 @@
 <div class="row">
+  <section class="mt-4 mb-4">
+    <input class="form-control-lg" #typeahead>
+  </section>
   <section class="col-8">
     <table class="table table-hover">
       <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Author</th>
-        <th scope="col">Title</th>
-      </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Author</th>
+          <th scope="col">Title</th>
+        </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let book of (books$ | async); index as i"
-          [class.table-active]="isBookSelected(book)"
-          (click)="selectBookOf(book)">
-        <th scope="row">{{i + 1}}</th>
-        <td>{{book.author}}</td>
-        <td>{{book.title}}</td>
-      </tr>
+      <tbody >
+        <ng-container *ngIf="(booksLength$ | async) as booksLength;else noBooks" >
+          <tr *ngFor="let book of (books$ | async); index as i"
+              [class.table-active]="isBookSelected(book)"
+              (click)="selectBookOf(book)">
+            <th scope="row">{{i + 1}} / {{booksLength}}</th>
+            <td>{{book.author}}</td>
+            <td>{{book.title}}</td>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </section>
@@ -23,3 +28,8 @@
                    [value]="selectedBook"
                    (bookChange)="updateBook($event)"></ba-book-details>
 </div>
+<ng-template #noBooks>
+  <tr>
+    <td colspan="3">There is no books!</td>
+  </tr>
+</ng-template>
