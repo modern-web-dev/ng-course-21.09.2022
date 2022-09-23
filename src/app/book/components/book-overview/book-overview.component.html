@@ -19,7 +19,9 @@
             placeholder="Filter...."
             [formControl]="typeaheadControl"
           />
-          <div class="invalid-feedback">Query too long.</div>
+          <ba-validation-message
+            [of]="typeaheadControl"
+          ></ba-validation-message>
           <button class="btn btn-outline-secondary" (click)="clearInput()">
             Clear
           </button>

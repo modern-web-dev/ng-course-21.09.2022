@@ -4,16 +4,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NotFoundComponent } from './book/components/not-found/not-found.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { BASE_URL } from './base-url.token';
 import { environment } from 'src/environments/environment';
 import { JwtInterceptor } from './jwt.interceptor';
-import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './shared/core.module';
 
 @NgModule({
   declarations: [AppComponent],
 
   imports: [
+    CoreModule,
+    SharedModule.forRoot(),
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([

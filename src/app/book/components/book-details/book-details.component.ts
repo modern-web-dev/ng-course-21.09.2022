@@ -44,7 +44,6 @@ export class BookDetailsComponent implements OnInit {
       });
 
     this.route.data.pipe(filter((data) => !data['fetchBook'])).subscribe();
-    this.bookFormGroup.valueChanges.subscribe(console.log);
   }
   updateBook(event: Event) {
     event.preventDefault();
