@@ -1,30 +1,45 @@
-import { Book } from '../model/book';
+import { Book, UpdatedBook } from '../model/book';
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { BASE_URL } from 'src/app/base-url.token';
 
 @Injectable()
 export class BookService {
   readonly contextPath = '/api/books';
+  constructor(
+    private readonly httpClient: HttpClient,
+    @Inject(BASE_URL) private readonly baseApi: string
+  ) {}
 
-  constructor(private readonly httpClient: HttpClient) {}
   get(id: number): Observable<Book> {
-    return this.httpClient.get<Book>(`${this.contextPath}/${id}`);
+    return this.httpClient.get<Book>(
+      `${this.baseApi}${this.contextPath}/${id}`
+    );
   }
 
   getAll(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(this.contextPath);
+    return this.httpClient.get<Book[]>(`${this.baseApi}${this.contextPath}`);
   }
 
-  addBook(bookToAdd: Book): Observable<Book> {
-    return this.httpClient.post<Book>(this.contextPath, bookToAdd);
+  addBook(bookToAdd: UpdatedBook): Observable<Book> {
+    return this.httpClient.post<Book>(
+      `${this.baseApi}${this.contextPath}`,
+      bookToAdd
+    );
   }
-  updateBook(id: number, bookToUpdate: Book): Observable<Book> {
-    return this.httpClient.put<Book>(`${this.contextPath}/${id}`, bookToUpdate);
+  updateBook(id: number, bookToUpdate: UpdatedBook): Observable<Book> {
+    return this.httpClient.put<Book>(
+      `${this.baseApi}${this.contextPath}/${id}`,
+      bookToUpdate
+    );
   }
 
   findBooks(q: string): Observable<Book[]> {
     const params = new HttpParams({ fromObject: { q } });
-    return this.httpClient.get<Book[]>(`${this.contextPath}`, { params });
+    return this.httpClient.get<Book[]>(`${this.baseApi}${this.contextPath}`, {
+      params,
+    });
   }
 }

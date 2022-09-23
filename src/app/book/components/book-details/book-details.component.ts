@@ -1,14 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap, tap, filter } from 'rxjs';
-import { Book } from '../../model/book';
+import { map, switchMap, filter } from 'rxjs';
+import { Book, UpdatedBook } from '../../model/book';
 import { BookService } from '../../services/book.service';
 
 @Component({
@@ -18,6 +11,7 @@ import { BookService } from '../../services/book.service';
 })
 export class BookDetailsComponent implements OnInit {
   book: Book | undefined | null;
+  dirty = false;
 
   constructor(
     private readonly bookService: BookService,
@@ -43,27 +37,19 @@ export class BookDetailsComponent implements OnInit {
     const bookForm = event.target as HTMLFormElement;
     const authorInput = bookForm.querySelector<HTMLInputElement>('#author');
     const titleInput = bookForm.querySelector<HTMLInputElement>('#title');
-    if (this.book) {
-      const updatedBook: Book = {
-        author: authorInput?.value ?? '',
-        title: titleInput?.value ?? '',
-      };
-      this.bookService.updateBook(this.book.id!, updatedBook).subscribe(() => {
-        this.dirty = false;
-        this.router.navigate(['..']);
-      });
-    } else {
-      const newBook: Book = {
-        author: authorInput?.value ?? '',
-        title: titleInput?.value ?? '',
-      };
-      this.bookService.addBook(newBook).subscribe(() => {
-        this.dirty = false;
-        this.router.navigate(['..']);
-      });
-    }
+
+    const book: UpdatedBook = {
+      author: authorInput?.value ?? '',
+      title: titleInput?.value ?? '',
+    };
+    const bookAktion = this.book
+      ? this.bookService.updateBook(this.book.id!, book)
+      : this.bookService.addBook(book);
+    bookAktion.subscribe(() => {
+      this.dirty = false;
+      this.router.navigate(['..']);
+    });
   }
-  dirty = false;
   markAsDirty() {
     this.dirty = true;
   }

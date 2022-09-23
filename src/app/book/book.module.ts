@@ -19,19 +19,26 @@ import { BookNotSavedGuard } from './resolvers/book-not-saved.guard';
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: '', component: BookOverviewComponent },
+      {
+        path: '',
+        component: BookOverviewComponent,
+        title: 'Books',
+      },
+
       {
         path: 'new',
         component: BookDetailsComponent,
-        canDeactivate:[BookNotSavedGuard],
+        title: 'Add Book',
         data: { fetchBook: false },
+        canDeactivate: [BookNotSavedGuard],
       },
       {
         path: ':id',
         component: BookDetailsComponent,
-        canDeactivate:[BookNotSavedGuard],
+        title: 'Edit Book',
         data: { fetchBook: true },
         resolve: { book: BookResolver },
+        canDeactivate: [BookNotSavedGuard],
       },
     ]),
   ],

@@ -29,13 +29,13 @@ export class BookOverviewComponent implements AfterViewInit, OnDestroy {
   @ViewChild('typeahead')
   typeahead?: ElementRef<HTMLInputElement>;
 
+  typeaheadElems$?: Observable<Book[]>;
   books$: Observable<Book[]> | undefined;
   booksLength$: Observable<number> | undefined;
   private readonly unsubscribe$: Subject<true> = new Subject<true>();
 
-  constructor(private readonly bookService: BookService) {
-  }
-  typeaheadElems$?: Observable<Book[]>;
+  constructor(private readonly bookService: BookService) {}
+
   ngAfterViewInit() {
     if (!this.typeahead) {
       throw new Error('Could not find typeahead');
@@ -53,9 +53,7 @@ export class BookOverviewComponent implements AfterViewInit, OnDestroy {
     );
 
     this.books$ = merge(this.bookService.getAll(), typeaheadBooks);
-    setTimeout(()=> {
-      this.booksLength$ = this.books$?.pipe(map((books) => books.length));
-    },0);
+    this.booksLength$ = this.books$?.pipe(map((books) => books.length));
   }
 
   ngOnDestroy(): void {
