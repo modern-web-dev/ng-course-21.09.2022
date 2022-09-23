@@ -8,6 +8,7 @@ import { NotFoundComponent } from './book/components/not-found/not-found.compone
 import { BASE_URL } from './base-url.token';
 import { environment } from 'src/environments/environment';
 import { JwtInterceptor } from './jwt.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],

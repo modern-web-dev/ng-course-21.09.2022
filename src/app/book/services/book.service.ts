@@ -36,8 +36,11 @@ export class BookService {
     );
   }
 
-  findBooks(q: string): Observable<Book[]> {
-    const params = new HttpParams({ fromObject: { q } });
+  findBooks(query: string | null): Observable<Book[]> {
+    let params = new HttpParams();
+    if(query){
+      params = params.append('q', query)
+    }
     return this.httpClient.get<Book[]>(`${this.baseApi}${this.contextPath}`, {
       params,
     });

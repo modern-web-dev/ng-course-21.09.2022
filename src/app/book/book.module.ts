@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { BookService } from './services/book.service';
 import { BookResolver } from './resolvers/book.resolver';
 import { BookNotSavedGuard } from './resolvers/book-not-saved.guard';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BookNotSavedGuard } from './resolvers/book-not-saved.guard';
   providers: [BookService, BookResolver, BookNotSavedGuard],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',

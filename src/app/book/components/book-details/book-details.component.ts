@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap, filter } from 'rxjs';
-import { Book, UpdatedBook } from '../../model/book';
+import { Book } from '../../model/book';
 import { BookService } from '../../services/book.service';
 
 @Component({
@@ -33,22 +33,22 @@ export class BookDetailsComponent implements OnInit {
     this.route.data.pipe(filter((data) => !data['fetchBook'])).subscribe();
   }
   updateBook(event: Event) {
-    event.preventDefault();
-    const bookForm = event.target as HTMLFormElement;
-    const authorInput = bookForm.querySelector<HTMLInputElement>('#author');
-    const titleInput = bookForm.querySelector<HTMLInputElement>('#title');
+    // event.preventDefault();
+    // const bookForm = event.target as HTMLFormElement;
+    // const authorInput = bookForm.querySelector<HTMLInputElement>('#author');
+    // const titleInput = bookForm.querySelector<HTMLInputElement>('#title');
 
-    const book: UpdatedBook = {
-      author: authorInput?.value ?? '',
-      title: titleInput?.value ?? '',
-    };
-    const bookAktion = this.book
-      ? this.bookService.updateBook(this.book.id!, book)
-      : this.bookService.addBook(book);
-    bookAktion.subscribe(() => {
-      this.dirty = false;
-      this.router.navigate(['..']);
-    });
+    // const book: UpdatedBook = {
+    //   author: authorInput?.value ?? '',
+    //   title: titleInput?.value ?? '',
+    // };
+    // const bookAktion = this.book
+    //   ? this.bookService.updateBook(this.book.id!, book)
+    //   : this.bookService.addBook(book);
+    // bookAktion.subscribe(() => {
+    //   this.dirty = false;
+    //   this.router.navigate(['..']);
+    // });
   }
   markAsDirty() {
     this.dirty = true;
