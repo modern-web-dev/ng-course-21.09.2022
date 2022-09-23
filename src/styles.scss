@@ -3,3 +3,8 @@ $enable-rounded: false;
 $primary: rgb(0, 112, 173);
 
 @import "~bootstrap/scss/bootstrap";
+
+
+input.ng-invalid{
+  @extend .is-invalid;
+}

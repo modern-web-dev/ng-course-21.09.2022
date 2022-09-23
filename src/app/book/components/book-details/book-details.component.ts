@@ -1,24 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap, filter } from 'rxjs';
-import { Book } from '../../model/book';
+import { Book, UpdatedBook } from '../../model/book';
 import { BookService } from '../../services/book.service';
+import { BookFormService } from './book-form.service';
+
+export type ControlsOf<T> = {
+  [K in keyof T]: T[K] extends number | string
+    ? FormControl<T[K]>
+    : FormGroup<ControlsOf<T[K]>>;
+};
 
 @Component({
   selector: 'ba-book-details',
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.scss'],
+  providers: [BookFormService],
 })
 export class BookDetailsComponent implements OnInit {
   book: Book | undefined | null;
-  dirty = false;
+
+  bookFormGroup = this.bookFormService.prepareForm();
 
   constructor(
     private readonly bookService: BookService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly bookFormService: BookFormService
   ) {}
   ngOnInit() {
+    this.bookFormService.setValidators(this.bookFormGroup);
+
     this.route.data
       .pipe(
         filter((data) => data['fetchBook']),
@@ -27,33 +40,28 @@ export class BookDetailsComponent implements OnInit {
       )
       .subscribe((book) => {
         this.book = book;
-        this.dirty = false;
+        this.bookFormGroup.reset(book);
       });
 
     this.route.data.pipe(filter((data) => !data['fetchBook'])).subscribe();
+    this.bookFormGroup.valueChanges.subscribe(console.log);
   }
   updateBook(event: Event) {
-    // event.preventDefault();
-    // const bookForm = event.target as HTMLFormElement;
-    // const authorInput = bookForm.querySelector<HTMLInputElement>('#author');
-    // const titleInput = bookForm.querySelector<HTMLInputElement>('#title');
+    event.preventDefault();
+    debugger;
+    const bookValue = this.bookFormGroup.getRawValue();
 
-    // const book: UpdatedBook = {
-    //   author: authorInput?.value ?? '',
-    //   title: titleInput?.value ?? '',
-    // };
-    // const bookAktion = this.book
-    //   ? this.bookService.updateBook(this.book.id!, book)
-    //   : this.bookService.addBook(book);
-    // bookAktion.subscribe(() => {
-    //   this.dirty = false;
-    //   this.router.navigate(['..']);
-    // });
+    const bookAktion = this.book
+      ? this.bookService.updateBook(this.book.id!, bookValue)
+      : this.bookService.addBook(bookValue);
+
+    bookAktion.subscribe(() => {
+      this.bookFormGroup.markAsPristine();
+      this.router.navigate(['..']);
+    });
   }
-  markAsDirty() {
-    this.dirty = true;
-  }
+
   canExit(): boolean {
-    return !this.dirty;
+    return this.bookFormGroup.pristine;
   }
 }

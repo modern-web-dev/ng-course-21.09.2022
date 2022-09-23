@@ -1,44 +1,48 @@
 {
   "books": [
     {
-      "id": 0,
       "author": {
-        "firstName": "Felipe",
+        "firstName": "Felipeeeeeee444eee",
         "lastName": "Coury"
       },
       "title": "ng-book: The Complete Guide to Angular",
-      "publishDate": "2018",
       "details": {
         "pages": 626
-      }
+      },
+      "id": 0
     },
     {
-      "id": 1,
       "author": {
-        "firstName": "Douglas",
+        "firstName": "Douglassssss",
         "lastName": "Crockford"
       },
       "title": "JavaScript. The Good Parts",
-      "publishDate": "2008",
       "details": {
-        "pages": "180",
-        "language": "English",
-        "cover": "soft"
-      }
+        "pages": "180"
+      },
+      "id": 1
     },
     {
-      "id": 2,
-      "title": "TypeScript Quickly",
       "author": {
         "firstName": "Yakov",
         "lastName": "Fain"
       },
+      "title": "TypeScript Quicklyyyy",
       "details": {
-        "pages": 520,
-        "language": "English",
-        "cover": "soft"
+        "pages": 520
       },
-      "publishDate": "2020"
+      "id": 2
+    },
+    {
+      "author": {
+        "firstName": "TEst",
+        "lastName": "TEst"
+      },
+      "title": "TEst",
+      "details": {
+        "pages": "12123222"
+      },
+      "id": 3
     }
   ]
 }
