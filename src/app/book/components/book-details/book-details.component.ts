@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap, filter } from 'rxjs';
+import { map, switchMap, filter, delay } from 'rxjs';
 import { Book, UpdatedBook } from '../../model/book';
 import { BookService } from '../../services/book.service';
 import { BookFormService } from './book-form.service';
@@ -34,6 +34,7 @@ export class BookDetailsComponent implements OnInit {
 
     this.route.data
       .pipe(
+        delay(1000),
         filter((data) => data['fetchBook']),
         switchMap(() => this.route.data),
         map((data) => data['book']!)
@@ -42,12 +43,9 @@ export class BookDetailsComponent implements OnInit {
         this.book = book;
         this.bookFormGroup.reset(book);
       });
-
-    this.route.data.pipe(filter((data) => !data['fetchBook'])).subscribe();
   }
   updateBook(event: Event) {
     event.preventDefault();
-    debugger;
     const bookValue = this.bookFormGroup.getRawValue();
 
     const bookAktion = this.book

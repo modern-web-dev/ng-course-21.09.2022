@@ -8,12 +8,11 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Book, UpdatedBook } from '../../model/book';
+import { UpdatedBook } from '../../model/book';
 import { ControlsOf } from './book-details.component';
 
 @Injectable()
 export class BookFormService {
-  constructor(private fb: FormBuilder) {}
   prepareForm() {
     // const form1 = this.fb.nonNullable.group({
     //   author: this.fb.nonNullable.group({

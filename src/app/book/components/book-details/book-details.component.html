@@ -1,56 +1,53 @@
-<div class="card">
-  <div class="card-header">Book details</div>
-  <div class="card-body">
-    <form (submit)="updateBook($event)" [formGroup]="bookFormGroup">
-      <div class="row" formGroupName="author">
-        <div class="col">
-          <label class="form-label" for="firstName">First name:</label>
-          <input
-            class="form-control"
-            id="firstName"
-            formControlName="firstName"
-          />
-          <ba-validation-message
-            [of]="bookFormGroup.get('author.firstName')"
-          ></ba-validation-message>
-        </div>
-        <div class="col">
-          <label class="form-label" for="lastName">Last name:</label>
-          <input
-            class="form-control"
-            id="lastName"
-            formControlName="lastName"
-          />
-          <ba-validation-message
-            [of]="bookFormGroup.get('author.lastName')"
-          ></ba-validation-message>
-        </div>
+<ba-card title="Book details">
+  <form (submit)="updateBook($event)" [formGroup]="bookFormGroup">
+    <div class="row" formGroupName="author">
+      <div class="col">
+        <label class="form-label" for="firstName">First name:</label>
+        <input
+          class="form-control"
+          id="firstName"
+          formControlName="firstName"
+        />
+        <ba-validation-message
+          [of]="bookFormGroup.get('author.firstName')"
+        ></ba-validation-message>
       </div>
-      <div class="row">
-        <div class="mb-3">
-          <label class="form-label" for="title">Title:</label>
-          <input class="form-control" id="title" formControlName="title" />
-          <ba-validation-message
-            [of]="bookFormGroup.get('title')"
-          ></ba-validation-message>
-        </div>
+      <div class="col">
+        <label class="form-label" for="lastName">Last name:</label>
+        <input
+          class="form-control"
+          id="lastName"
+          formControlName="lastName"
+        />
+        <ba-validation-message
+          [of]="bookFormGroup.get('author.lastName')"
+        ></ba-validation-message>
       </div>
-      <div class="row" formGroupName="details">
-        <div class="mb-3">
-          <label class="form-label" for="pages">Pages:</label>
-          <input class="form-control" id="pages" formControlName="pages" />
-          <ba-validation-message
-            [of]="bookFormGroup.get('details.pages')"
-          ></ba-validation-message>
-        </div>
+    </div>
+    <div class="row">
+      <div class="mb-3">
+        <label class="form-label" for="title">Title:</label>
+        <input class="form-control" id="title" formControlName="title" />
+        <ba-validation-message
+          [of]="bookFormGroup.get('title')"
+        ></ba-validation-message>
       </div>
-      <button
-        class="btn btn-primary"
-        type="submit"
-        [disabled]="bookFormGroup.pristine || bookFormGroup.invalid"
-      >
-        Save
-      </button>
-    </form>
-  </div>
-</div>
+    </div>
+    <div class="row" formGroupName="details">
+      <div class="mb-3">
+        <label class="form-label" for="pages">Pages:</label>
+        <input class="form-control" id="pages" formControlName="pages" />
+        <ba-validation-message
+          [of]="bookFormGroup.get('details.pages')"
+        ></ba-validation-message>
+      </div>
+    </div>
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="bookFormGroup.pristine || bookFormGroup.invalid"
+    >
+      Save
+    </button>
+  </form>
+</ba-card>
